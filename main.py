@@ -15,11 +15,11 @@ import re
 
 st.set_page_config(layout="wide")
 st.title("Y Combinator Summer 2025 Companies")
-with st.spinner("Загрузка данных YCombinator..."):
+with st.spinner("Loading YCombinator data..."):
     yc_data = scrape_yc_algolia()
-with st.spinner("Поиск LinkedIn профилей..."):
+with st.spinner("Searching LinkedIn..."):
     linkedin_data = scrape_linkedin(os.environ["SEARCHAPI_KEY"])
-st.text(f"Найдено YCombinator: {len(yc_data)}, LinkedIn: {len(linkedin_data)}")
+st.text(f"Found YCombinator: {len(yc_data)}, LinkedIn: {len(linkedin_data)}")
 
 df = pd.DataFrame(
     [
@@ -97,7 +97,7 @@ fig = px.bar(
     df_exploded_industries["Industry"].value_counts().reset_index(),
     x="count",
     y="Industry",
-    title="Распределение компаний по индустриям",
+    title="Industry distribution of companies",
     orientation="h",
 )
 st.plotly_chart(fig, use_container_width=True)
@@ -110,7 +110,7 @@ fig = px.bar(
     df_exploded_regions["Regions"].value_counts().reset_index(),
     x="count",
     y="Regions",
-    title="Распределение компаний по регионам",
+    title="Regional distribution of companies",
     orientation="h",
 )
 st.plotly_chart(fig, use_container_width=True)
@@ -119,8 +119,8 @@ fig = px.histogram(
     final_df[final_df["Team Size"].notna()],
     x="Team Size",
     nbins=10,
-    title="Распределение размера команд",
-    labels={"Team Size": "Количество сотрудников"},
+    title="Team size distribution",
+    labels={"Team Size": "Number of employees"},
 )
 st.plotly_chart(fig)
 
@@ -128,8 +128,8 @@ fig = px.histogram(
     final_df[final_df["LinkedIn Followers"].notna()],
     x="LinkedIn Followers",
     nbins=10,
-    title="Кол-во подписчиков",
-    labels={"LinkedIn Followers": "Количество подписчиков"},
+    title="Follower count",
+    labels={"LinkedIn Followers": "Follower count"},
 )
 st.plotly_chart(fig)
 
@@ -138,7 +138,7 @@ tags_wordcloud = WordCloud(width=800, height=400).generate(
 )
 st.image(
     tags_wordcloud.to_array(),
-    caption="Облако тегов",
+    caption="Tag cloud",
     use_container_width=True,
 )
 
@@ -150,6 +150,6 @@ text = re.sub(
 wordcloud = WordCloud(width=800, height=400).generate(text)
 st.image(
     wordcloud.to_array(),
-    caption="Ключевые слова в описаниях компаний",
+    caption="Keywords in company descriptions",
     use_container_width=True,
 )
