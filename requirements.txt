@@ -1,0 +1,7 @@
+fake-useragent==2.2.0
+wordcloud==1.9.4
+streamlit==1.47.1
+plotly==6.2.0
+pandas==2.3.1
+pydantic==2.11.7
+Faker==37.5.3
