@@ -1,5 +1,6 @@
 from typing import TypedDict
 from utils import google_search_linkedin_followers_to_number
+import streamlit as st
 
 
 import requests
@@ -15,6 +16,7 @@ class LinkedInScrapedData(TypedDict):
     linkedin_followers: int | None
 
 
+@st.cache_data(ttl=4 * 3600)
 def scrape_linkedin(searchapi_key: str) -> list[LinkedInScrapedData]:
     payload = {
         "api_key": searchapi_key,

@@ -4,6 +4,7 @@ import json
 import requests
 from pydantic import BaseModel
 from urllib.parse import urlparse
+import streamlit as st
 
 
 YC_ALGOLIA_URL = f"https://45bwzj1sgc-2.algolianet.com/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(3.35.1)%3B%20Browser%3B%20JS%20Helper%20(3.16.1)&x-algolia-application-id=45BWZJ1SGC&x-algolia-api-key=MjBjYjRiMzY0NzdhZWY0NjExY2NhZjYxMGIxYjc2MTAwNWFkNTkwNTc4NjgxYjU0YzFhYTY2ZGQ5OGY5NDMxZnJlc3RyaWN0SW5kaWNlcz0lNUIlMjJZQ0NvbXBhbnlfcHJvZHVjdGlvbiUyMiUyQyUyMllDQ29tcGFueV9CeV9MYXVuY2hfRGF0ZV9wcm9kdWN0aW9uJTIyJTVEJnRhZ0ZpbHRlcnM9JTVCJTIyeWNkY19wdWJsaWMlMjIlNUQmYW5hbHl0aWNzVGFncz0lNUIlMjJ5Y2RjJTIyJTVE"
@@ -29,6 +30,7 @@ class YcScrapedCompany(BaseModel):
     one_liner: str
 
 
+@st.cache_data(ttl=4 * 3600)
 def scrape_yc_algolia() -> list[YcScrapedCompany]:
     useragent_faker = UserAgent()
     faker = Faker()
